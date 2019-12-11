@@ -1,5 +1,8 @@
 defmodule DemoWeb.ClockLive do
   use Phoenix.LiveView
+  alias DemoWeb.StyleLive
+  alias DemoWeb.StyleLive.Style
+  alias DemoWeb.StyleUpdates
   import Calendar.Strftime
 
   def render(assigns) do

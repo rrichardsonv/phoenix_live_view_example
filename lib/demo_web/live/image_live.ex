@@ -1,9 +1,12 @@
 defmodule DemoWeb.ImageLive do
   use Phoenix.LiveView
   alias DemoWeb.Router.Helpers, as: Routes
+  alias DemoWeb.StyleLive.Style
+  alias DemoWeb.StyleUpdates
 
   def radio_tag(assigns) do
     assigns = Enum.into(assigns, %{})
+
     ~L"""
     <input type="radio" name="<%= @name %>" value="<%= @value %>"
       <%= if @value == @checked, do: "checked" %> />
@@ -29,11 +32,20 @@ defmodule DemoWeb.ImageLive do
   end
 
   def mount(_session, socket) do
-    IO.inspect({__MODULE__, connected: connected?(socket), root_pid: socket.root_pid, self: self()})
+    IO.puts("calling update")
+
+    _ =
+      StyleUpdates.notify_live_view(__MODULE__, [:updated], [%Style{id: socket.id, color: "red"}])
+
+    IO.inspect(
+      {__MODULE__, connected: connected?(socket), root_pid: socket.root_pid, self: self()}
+    )
+
     {:ok, assign(socket, width: 100, bg: "white", depth: 0, max_depth: 0)}
   end
 
   def handle_event("update", %{"width" => width, "bg" => bg}, socket) do
+    StyleUpdates.notify_live_view(__MODULE__, [:updated], [%Style{id: socket.id, color: bg}])
     {:noreply, assign(socket, width: String.to_integer(width), bg: bg)}
   end
 end
