@@ -2,6 +2,7 @@ defmodule DemoWeb.ImageLive do
   use Phoenix.LiveView
   alias DemoWeb.Router.Helpers, as: Routes
   alias DemoWeb.StyleLive.Style
+  import DemoWeb.StyleLive.Style, only: [sigil_Z: 2]
   alias DemoWeb.StyleUpdates
 
   def radio_tag(assigns) do

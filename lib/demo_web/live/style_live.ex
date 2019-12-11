@@ -2,7 +2,6 @@ defmodule DemoWeb.StyleLive do
   use Phoenix.LiveView, id: "style-live", container: {:style, []}
   alias DemoWeb.StyleLive.Style
   alias DemoWeb.StyleLive.Styles
-  alias DemoWeb.StyleLive.StyleComponent
   alias DemoWeb.StyleUpdates
 
   def mount(_session, socket) do
